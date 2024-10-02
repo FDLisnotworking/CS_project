@@ -1,4 +1,3 @@
-#Fadil: Tarun if you're reading this, try to understand what is happening here. Ok bye
 import mysql.connector as msc
 db=msc.connect(host ="localhost",user="root",password="root",database="bookshop")
 #Fadil: Establishing connection
