@@ -1,4 +1,7 @@
-#Fadil: Tarun if you're reading this, try to understand what is happening here. Ok bye
+#Fadil: Tarun if you're reading this,
+#try to understand what is happening here.
+#Ok bye
+#STS was here!!
 import mysql.connector as msc
 import random
 import datetime
