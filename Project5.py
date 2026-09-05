@@ -3,8 +3,8 @@ import mysql.connector as msc
 import random
 import datetime
 
-db=msc.connect(host ="localhost",user="root",password="root",database="bookshop")       #Fadil: Establishing connection
-cursor=db.cursor()      #Fadil: Creating cursor
+db=msc.connect(host ="localhost",user="root",password="root",database="bookshop")
+cursor=db.cursor()
 
 def Books():
 
