@@ -93,10 +93,6 @@ def Books():
         ch_books[c2]()
     except KeyError:
         print("Invalid choice")
-        
-        #Fadil: Siddharth add some if else elif statements so that these things do something
-        #Fadil: Only work on the part of the code that is related with the 'books' table. The 'sales' table is my work and I'll do it
-        #Siddharth: I have done the books part but i need help witth the back option
 
 def Sales():
     
@@ -136,16 +132,16 @@ def Sales():
         for i in range(n):
             while True:
                 try:
-                    print(i+1, ". ", sep='',end='')                 #Fadil: This statement for neatness
+                    print(i+1, ". ", sep='',end='')                 # This statement for neatness
                     b_id=int(input("Enter book ID: "))
                     break
                 except ValueError:
                     print("Enter a valid number")
-            cursor.execute(f"select book_name from books where book_id={b_id}")       #Fadil: Fetching name of book using ID
-            b_n=cursor.fetchone()[0]        #Fadil: Saving book name to a variable
+            cursor.execute(f"select book_name from books where book_id={b_id}")       # Fetching name of book using ID
+            b_n=cursor.fetchone()[0]        # Saving book name to a variable
             dt = str(datetime.datetime.now())[:-7]
             cursor.execute(f'insert into sales values({b_id},"{b_n}",{c_id},{c_p},{s_id},"{c_fn}","{c_ln}","{dt}")')
-            db.commit()         #Fadil: Committing (Saving) the values
+            db.commit()
             print("record added sucessfully")
 
     def EditSales():
@@ -160,14 +156,13 @@ def Sales():
         if c3=='1':
             nb_id=input("Enter new Book ID: ")
             cursor.execute("select book_name from books where book_id="+nb_id)
-            nb_n=cursor.fetchone()[0]           #Fadil: Getting the name of book using book id. Same thing I did for adding record
-            cursor.execute('update sales set book_id='+nb_id+', book_name="'+nb_n+'" where book_id='+b_id+' and customer_id='+c_id)         #Fadil: Updating Values. Here I'm doing for both book ID and book name using only book ID
+            nb_n=cursor.fetchone()[0]
+            cursor.execute('update sales set book_id='+nb_id+', book_name="'+nb_n+'" where book_id='+b_id+' and customer_id='+c_id)
             db.commit()
             print("Record added sucessfully")
         elif c3=='2':
             nc_id=input("Enter new Customer ID: ")
             cursor.execute('update sales set customer_id='+nc_id+' where book_id='+b_id+' and customer_id='+c_id)
-                    #Fadil: More updating values
             db.commit()
             print("Record added sucessfully")
         elif c3=='3':
@@ -180,8 +175,6 @@ def Sales():
             cursor.execute('update sales set customer_name="'+nc_n+'" where book_id='+b_id+' and customer_id='+c_id)
             db.commit()
             print("Record added sucessfully")
-            #Fadil: Code is working without errors (I think)
-            #Fadil: Siddharth remind me to add a new column named 'Date' in the sales table
 
     def DeleteSalesRecord():
         print("\n1. Choose and delete")
@@ -190,7 +183,7 @@ def Sales():
         if c3=='1':
             b_id=input("\nEnter Book ID: ")
             c_id=input("Enter Customer ID: ")
-            cursor.execute('select * from sales where book_id='+b_id+' and customer_id='+c_id)          #Fadil: This part is to show what is being deleted
+            cursor.execute('select * from sales where book_id='+b_id+' and customer_id='+c_id)
             L=cursor.fetchone()
             print("\nBook ID:", L[0])
             print("Book Name:", L[1])
@@ -200,7 +193,7 @@ def Sales():
             c4=input("Are you sure you want to delete this record? (y/n): ")
             if c4=='y':
                 cursor.execute('delete from sales where book_id='+b_id+' and customer_id='+c_id)
-                db.commit()         #Fadil: db.commit() here is not a good idea (or anywhere else). For now I'm going to keep it here but will be removed later and added as a seperate option when the user is choosing. That way any mistakes can be undoed
+                db.commit()
                 print("Record deleted sucessfully")
             else:
                 print("Record not deleted")
@@ -224,11 +217,10 @@ def Sales():
             print("3. Customer ID")
             print("4.Customer phone")
             print("5. Customer name")
-            #Fadil: Cool searching thing I made using the LIKE operator in SQL
             c4=input("Enter your choice: ")
             if c4=='1':
                 c5=input("Enter Book ID: ")
-                cursor.execute(f'select * from sales where book_id like "%{c5}%"')         #Fadil: Basically takes the value and uses the LIKE operator to find something similiar to what the user entered
+                cursor.execute(f'select * from sales where book_id like "%{c5}%"')
             elif c4=='2':
                 c5=input("Enter Book name: ")
                 cursor.execute(f'select * from sales where book_name like "%{c5}%"')
@@ -242,7 +234,6 @@ def Sales():
                 c5=input("Enter Customer name: ")
                 cursor.execute(f'select * from sales where customer_name like "%{c5}%"')
             L=cursor.fetchall()
-            #Fadil: I did not expect this to work but damn it works
             if not L:
                 print("No records found")
             else:
@@ -291,8 +282,8 @@ Date & Time: {i[7]}""")
 
 ch_main={1: Books, 2: Sales}
 
-print(db)                                                    #Fadil: Checking connection. Not required
-print("[Insert Welcome text]")                  #Fadil: Ignore this for now
+print(db)
+print("[Insert Welcome text]")
 
 
 while True:
